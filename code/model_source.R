@@ -3,12 +3,12 @@
 mod=function(){
   
   #PRIORS
-  #lnalpha ~ dnorm(0,1.0E-6)%_%T(0,10) #uninformative
-  #beta ~ dnorm(0,1.0E-6)%_%T(0,10)  #uninformative, normal distribution, constrained to be >0
-  #phi ~ dnorm(0,1.0E-6)%_%T(-0.98,0.98) #AR(1) model so phi IS included and does not = zero. uninformative btwn -1 & 1
+  #lnalpha ~ dnorm(0,1.0E-6)%_%T(0,10) #uninformative; 2019 version
+  #beta ~ dnorm(0,1.0E-6)%_%T(0,10)  #uninformative, normal distribution, constrained to be > 0; 2019 version
+  #phi ~ dnorm(0,1.0E-6)%_%T(-0.98,0.98) #AR(1) model so phi IS included and does not = zero. uninformative btwn -1 & 1 ; 2019 version
   lnalpha ~ dnorm(0,1.0E-6)%_%T(1.0E-6, )#uninformative;*#normal distribution with mean 0 and large variance; constrained to be >0 since more biologically conservative (pg. 406)
   beta ~ dnorm(0,1.0E-6)%_%T(1.0E-6,)   #uninformative; normal distrib; constrained to be >0 *          
-  phi ~ dnorm(0,1.0E-6)%_%T(-1, 1)#uninformative; btw -1 and 1
+  phi ~ dnorm(0,1.0E-6)%_%T(-1, 1)#uninformative; btw -1 and 1 # set phi = 0 to run non-AR1 model
   
   resid.red.0 ~ dnorm(0,tau.red)
   sigma.white ~ dunif(0,10)

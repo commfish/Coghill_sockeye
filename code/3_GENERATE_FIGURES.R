@@ -5,11 +5,10 @@
 
 LowerB <- 20000 #lower bound of recommended escapement goal range
 UpperB <- 75000 #upper bound of recommended escapement goal range
-SMSY <- 56364.1761 #Lambert W version of SMSY from file: AR_quantiles_lambert
-lnalpha.c <- 2.35996502749518
-lnalpha <- 1.75249848430773
-beta <- 0.0000139060655072188 #let's try and grab these last 4 parameter outputs from the "stats.csv" output
-
+SMSY <- 56838.17# 56364.1761 #Lambert W version of SMSY from file stats.csv
+lnalpha.c <- 2.36158138 #2.35996502749518
+lnalpha <- 1.74943901029208#1.75249848430773
+beta <- 0.0000138524730644167#0.0000139060655072188 #let's try and grab these last 4 parameter outputs from the "stats.csv" output
 
 #load----
 library(plyr)
@@ -19,10 +18,15 @@ library(grid)
 library(gsl)
 library(scales)
 library(backports)
-#library(FNGr)
 library(FField)
 
-theme_set(theme_sleek())
+devtools::install_github("commfish/fngr")
+library(fngr)
+library(extrafont)
+loadfonts(device="win")
+windowsFonts(Times=windowsFont("Times New Roman"))
+theme_set(theme_report())
+
 source('code/functions.r')
 
 if(!dir.exists(file.path("output", "rjags_Full_Basecase", "processed"))){dir.create(file.path("output", "rjags_Full_Basecase", "processed"))}
@@ -39,6 +43,7 @@ coda %>%
          R.msy.c = S.msy.c*exp(lnalpha.c-beta*S.msy.c), 
          MSY.c = R.msy.c-S.msy.c, 
          Rmax = exp(lnalpha)*(1/beta)*exp(-1)) -> coda
+
 # analysis----
 # create function for probability profiles and figures
 profile(i=10, z=500, xa.start=0, xa.end=10000,lnalpha.c, beta) #can change i,z, xa.start, xa.end
