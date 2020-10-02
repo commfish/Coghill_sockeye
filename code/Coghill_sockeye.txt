@@ -1,8 +1,8 @@
 model
 {
-    lnalpha ~ dnorm(0.00000E+00, 1.00000E-06)  T(0.00000E+00, 10)
-    beta ~ dnorm(0.00000E+00, 1.00000E-06)  T(0.00000E+00, 10)
-    phi ~ dnorm(0.00000E+00, 1.00000E-06)  T(-0.98, 0.98)
+    lnalpha ~ dnorm(0.00000E+00, 1.00000E-06)  T(1.00000E-06, )
+    beta ~ dnorm(0.00000E+00, 1.00000E-06)  T(1.00000E-06, )
+    phi ~ dnorm(0.00000E+00, 1.00000E-06)  T(-1, 1)
     resid.red.0 ~ dnorm(0.00000E+00, tau.red)
     sigma.white ~ dunif(0.00000E+00, 10)
     for (y in 1:n) {
@@ -22,7 +22,7 @@ model
     for (y in 1:n) {
         resid.white[y] <- lnRS[y] - mean2.lnRS[y]
     }
-    alpha <- exp(lnalpha)
+    alpha <- exp(lnalpha.c)
     sigma.red <- 1/sqrt(tau.red)
     tau.white <- 1/sigma.white/sigma.white
     tau.red <- tau.white * (1 - phi * phi)

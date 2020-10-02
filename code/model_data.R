@@ -5,7 +5,7 @@
 library(tidyverse)
 
 # data----
-brood <- read.csv("state_space_model/data/Coghill_Sock.csv", header = TRUE)
+brood <- read.csv("data/Coghill_Sock.csv", header = TRUE)
 brood
 
 # cleanup data

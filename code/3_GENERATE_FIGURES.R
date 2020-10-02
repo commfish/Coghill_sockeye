@@ -23,13 +23,13 @@ library(backports)
 library(FField)
 
 theme_set(theme_sleek())
-source('state_space_model/code/functions.r')
+source('code/functions.r')
 
-if(!dir.exists(file.path("state_space_model", "output", "rjags_Full_Basecase", "processed"))){dir.create(file.path("state_space_model", "output", "rjags_Full_Basecase", "processed"))}
+if(!dir.exists(file.path("output", "rjags_Full_Basecase", "processed"))){dir.create(file.path("output", "rjags_Full_Basecase", "processed"))}
 
 # data----
-spawnrecruitdat <- read.csv("state_space_model/data/Coghill_Sock.csv") #Load Data File (make sure this file is updated)
-coda <- read.csv("state_space_model/output/rjags_Full_Basecase/coda.csv") 
+spawnrecruitdat <- read.csv("data/Coghill_Sock.csv") #Load Data File (make sure this file is updated)
+coda <- read.csv("output/rjags_Full_Basecase/coda.csv") 
 
 # data clean----
 # profile spawnrecruitdat
@@ -42,8 +42,8 @@ coda %>%
 # analysis----
 # create function for probability profiles and figures
 profile(i=10, z=500, xa.start=0, xa.end=10000,lnalpha.c, beta) #can change i,z, xa.start, xa.end
-QM <- read.csv("state_space_model/output/rjags_Full_BaseCase/processed/QM.csv")
-CI <- read.csv("state_space_model/output/rjags_Full_BaseCase/processed/CI.csv")
+QM <- read.csv("output/rjags_Full_BaseCase/processed/QM.csv")
+CI <- read.csv("output/rjags_Full_BaseCase/processed/CI.csv")
 num <- nrow(QM)
 QM %>%
   dplyr::select(c(escapement)) -> x
@@ -88,7 +88,7 @@ ggplot(data=dataset, aes(x=escapement, y=recruitment, group=variable))+
   geom_text(size=3, data=dataset, aes(x=escapement, y=recruitment, group=52, label=year,family="Times", 
                                       hjust = -0.1, vjust= -0.4)) +
   theme_classic(base_size = 14)
-ggsave("state_space_model/output/rjags_Full_BaseCase/processed/horsetail.png", dpi = 500, height = 6, width = 8, units = "in")
+ggsave("output/rjags_Full_BaseCase/processed/horsetail.png", dpi = 500, height = 6, width = 8, units = "in")
 
 #Alternative horsetail plot
 dataset %>%
@@ -131,5 +131,5 @@ ggplot(data=dataset1, aes(x=escapement, y=Median, group=variable)) +
   geom_text(size=3, data=dataset1, aes(x=escapement1, y=recruitment, group=52, label=year,family="Times", 
                                        hjust = -0.1, vjust= -0.4)) +
   theme_classic(base_size = 16)
-ggsave("state_space_model/output/rjags_Full_BaseCase/processed/horsetail2.png", dpi = 500, height = 6, width = 8, units = "in")
+ggsave("output/rjags_Full_BaseCase/processed/horsetail2.png", dpi = 500, height = 6, width = 8, units = "in")
 

@@ -74,11 +74,11 @@ profile <-function(i,z,xa.start, xa.end,lnalpha.c, beta){
  
    qm <- qm %>% 
     mutate_if(is.numeric, round, digits = 6)
-  write.csv(qm,("state_space_model/output/rjags_Full_BaseCase/processed/QM.csv"), row.names=FALSE)
+  write.csv(qm,("output/rjags_Full_BaseCase/processed/QM.csv"), row.names=FALSE)
   
   Y <- Y %>% 
     mutate_if(is.numeric, round, digits = 6)
-  write.csv(Y,("state_space_model/output/rjags_Full_BaseCase/processed/Y.csv"), row.names=FALSE)
+  write.csv(Y,("output/rjags_Full_BaseCase/processed/Y.csv"), row.names=FALSE)
 
   
 # confidence intervals ----
@@ -100,9 +100,9 @@ CI <- CI[c("q95", "q90", "Median","q10", "q5", "escapement")]
   
 CI <- CI %>% 
     mutate_if(is.numeric, round, digits = 6)
-write.csv(CI,("state_space_model/output/rjags_Full_BaseCase/processed/CI.csv"), row.names=FALSE)
+write.csv(CI,("output/rjags_Full_BaseCase/processed/CI.csv"), row.names=FALSE)
   
-read.csv("state_space_model/output/rjags_Full_BaseCase/processed/Y.csv") -> Y
+read.csv("output/rjags_Full_BaseCase/processed/Y.csv") -> Y
 
 Y %>% 
     dplyr::select(escapement, oy_0.9, oy_0.8, oy_0.7) %>% 
@@ -145,7 +145,7 @@ my4 %>%
     facet_grid(sra ~ .) +geom_vline(xintercept=SMSY, lwd=1.25)+
     theme(legend.position="bottom") + theme(legend.title=element_blank())
   options(scipen=99999)
-  ggsave("state_space_model/output/rjags_Full_BaseCase/processed/0.8_0.9_0.7.png", dpi=500, dev='png', width=7, height=6, units='in')
+  ggsave("output/rjags_Full_BaseCase/processed/0.8_0.9_0.7.png", dpi=500, dev='png', width=7, height=6, units='in')
   
   ggplot(qm, aes(escapement, Median))+geom_line(size=1)+
     geom_ribbon(aes(ymin = q5, ymax = q95), alpha=.15)+
@@ -154,7 +154,7 @@ my4 %>%
     scale_x_continuous(labels = comma,breaks = seq(0, 300000, 50000), limits = c(0,300000))+
     scale_y_continuous(labels = comma,breaks = seq(-600000, 600000, 100000), limits = c(-600000,600000))+
     geom_vline(xintercept = LowerB,linetype = "longdash" )+geom_vline(xintercept = UpperB ,linetype = "longdash")
-  ggsave("state_space_model/output/rjags_Full_BaseCase/processed/expected_sustained_yield.png", dpi=500, width=8, height=5, units='in')}
+  ggsave("output/rjags_Full_BaseCase/processed/expected_sustained_yield.png", dpi=500, width=8, height=5, units='in')}
 
 
 
