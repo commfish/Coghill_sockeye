@@ -2,7 +2,7 @@ model
 {
     lnalpha ~ dnorm(0.00000E+00, 1.00000E-06)  T(1.00000E-06, )
     beta ~ dnorm(0.00000E+00, 1.00000E-06)  T(1.00000E-06, )
-    phi ~ dnorm(0.00000E+00, 1.00000E-06)  T(-1, 1)
+    phi <- 0.00000E+00
     resid.red.0 ~ dnorm(0.00000E+00, tau.red)
     sigma.white ~ dunif(0.00000E+00, 10)
     for (y in 1:n) {
@@ -22,14 +22,17 @@ model
     for (y in 1:n) {
         resid.white[y] <- lnRS[y] - mean2.lnRS[y]
     }
-    alpha <- exp(lnalpha.c)
+    alpha <- exp(lnalpha)
+    alpha.c <- exp(lnalpha.c)
     sigma.red <- 1/sqrt(tau.red)
     tau.white <- 1/sigma.white/sigma.white
     tau.red <- tau.white * (1 - phi * phi)
     lnalpha.c <- lnalpha + (sigma.red * sigma.red/2)
     S.max <- 1/beta
     S.eq <- S.max * lnalpha.c
+    S.eq.alt <- S.max * lnalpha
     S.msy <- S.eq * (0.5 - 0.07 * lnalpha.c)
+    S.msy.alt <- S.eq.alt * (0.5 - 0.07 * lnalpha)
     U.msy <- lnalpha.c * (0.5 - 0.07 * lnalpha.c)
     R.msy <- S.msy * exp(lnalpha.c - beta * S.msy)
     MSY <- step(R.msy - S.msy) * (R.msy - S.msy)

@@ -8,8 +8,8 @@ mod=function(){
   #phi ~ dnorm(0,1.0E-6)%_%T(-0.98,0.98) #AR(1) model so phi IS included and does not = zero. uninformative btwn -1 & 1 ; 2019 version
   lnalpha ~ dnorm(0,1.0E-6)%_%T(1.0E-6, )#uninformative;*#normal distribution with mean 0 and large variance; constrained to be >0 since more biologically conservative (pg. 406)
   beta ~ dnorm(0,1.0E-6)%_%T(1.0E-6,)   #uninformative; normal distrib; constrained to be >0 *          
-  phi ~ dnorm(0,1.0E-6)%_%T(-1, 1)#uninformative; btw -1 and 1 # set phi = 0 to run non-AR1 model
-  
+  #phi ~ dnorm(0,1.0E-6)%_%T(-1, 1)#uninformative; btw -1 and 1 # set phi = 0 to run non-AR1 model
+  phi <- 0 # non AR model
   resid.red.0 ~ dnorm(0,tau.red)
   sigma.white ~ dunif(0,10)
   
@@ -23,7 +23,8 @@ mod=function(){
   for(y in 1:n) {  resid.red[y]     <- lnRS[y] - mean1.lnRS[y]  }
   for(y in 1:n) {  resid.white[y] <- lnRS[y] - mean2.lnRS[y]  }
   
-  alpha <- exp(lnalpha.c) #exponentiate to solve for alpha
+  alpha <- exp(lnalpha) #exponentiate to solve for alpha
+  alpha.c <- exp(lnalpha.c) #exponentiate to solve for alpha.c
   sigma.red <- 1 / sqrt(tau.red)
   tau.white <- 1 / sigma.white / sigma.white
   tau.red <- tau.white * (1-phi*phi)
@@ -32,8 +33,9 @@ mod=function(){
   
   S.max <- 1 / beta
   S.eq <- S.max * lnalpha.c 
-  
+  S.eq.alt <- S.max * lnalpha # no bias correction
   S.msy <- S.eq * (0.5 - 0.07*lnalpha.c)  #Hilborn approximation to calculate Smsy
+  S.msy.alt <- S.eq.alt * (0.5 - 0.07*lnalpha) # no bias correction
   U.msy <- lnalpha.c * (0.5 - 0.07*lnalpha.c)  #Hilborn approximation of U.msy
   R.msy <- S.msy * exp(lnalpha.c - beta * S.msy) #Xinxian's calculation of R.msy
   MSY <- step(R.msy-S.msy)*(R.msy-S.msy) #if R.msy < S.msy then MSY=0.
