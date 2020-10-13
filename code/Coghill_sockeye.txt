@@ -30,9 +30,7 @@ model
     lnalpha.c <- lnalpha + (sigma.red * sigma.red/2)
     S.max <- 1/beta
     S.eq <- S.max * lnalpha.c
-    S.eq.alt <- S.max * lnalpha
     S.msy <- S.eq * (0.5 - 0.07 * lnalpha.c)
-    S.msy.alt <- S.eq.alt * (0.5 - 0.07 * lnalpha)
     U.msy <- lnalpha.c * (0.5 - 0.07 * lnalpha.c)
     R.msy <- S.msy * exp(lnalpha.c - beta * S.msy)
     MSY <- step(R.msy - S.msy) * (R.msy - S.msy)

@@ -1,14 +1,14 @@
 # R CODE TO CREATE PROFILES DATA AND FIGURES (Horsetail plots, age comp, maturity at age,
 # point estimate plots, yield plots)
 # created by Ben Williams (Ben.Williams@alaska.gov);Nov 3, 2016; 2017-7-4
-# Changes made by Sara Miller (Sara.Miller@alaska.gov); April 2017
+# Changes made by Sara Miller (Sara.Miller@alaska.gov); October 2020
 
 LowerB <- 20000 #lower bound of recommended escapement goal range
 UpperB <- 75000 #upper bound of recommended escapement goal range
-SMSY <- 55433.0859# 56364.1761 #Lambert W version of SMSY from file stats.csv
-lnalpha.c <-2.33564881268931 #2.35996502749518
-lnalpha <- 1.75731102499718#1.75249848430773
-beta <- 0.0000141082102801461 #0.0000139060655072188 #let's try and grab these last 4 parameter outputs from the "stats.csv" output
+SMSY <- 55863.05 #Lambert W version of SMSY from file stats.csv
+lnalpha.c <-2.32010222657675 
+lnalpha <- 1.7449322109841
+beta <- 0.0000139956245496603 #let's try and grab these last 4 parameter outputs from the "stats.csv" output
 
 #load----
 library(plyr)
