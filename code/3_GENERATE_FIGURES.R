@@ -19,6 +19,7 @@ library(gsl)
 library(scales)
 library(backports)
 library(FField)
+library(gg.gap)
 
 devtools::install_github("commfish/fngr")
 library(fngr)
@@ -47,6 +48,7 @@ coda %>%
 # analysis----
 # create function for probability profiles and figures
 profile(i=10, z=500, xa.start=0, xa.end=10000,lnalpha.c, beta) #can change i,z, xa.start, xa.end
+#profile(i=10, z=500, xa.start=0, xa.end=1000,lnalpha.c, beta) #can change i,z, xa.start, xa.end
 QM <- read.csv("output/rjags_Full_BaseCase/processed/QM.csv")
 CI <- read.csv("output/rjags_Full_BaseCase/processed/CI.csv")
 num <- nrow(QM)
@@ -119,22 +121,24 @@ y.fact <- 100/max(dataset1$recruitment1)
 coords <- FFieldPtRep(coords = cbind(dataset1$escapement1 * x.fact, dataset1$recruitment * y.fact), rep.fact = 40)
 x.t <- coords$x/x.fact 
 y.t <- coords$y/y.fact 
-
+# https://stackoverflow.com/questions/61564313/remove-axis-titles-in-gg-gap-plots
 ggplot(data=dataset1, aes(x=escapement, y=Median, group=variable)) + 
   geom_line(size=1, lty=2, group=51) +
   geom_ribbon(aes(ymin = q5, ymax = q95, group=51), alpha=.08) +
   geom_ribbon(aes(ymin = q10, ymax = q90, group=51), alpha=.08) +
   xlab('Spawners (S)') +
   ylab('Recruits (R)') +
-  scale_y_continuous(labels = comma,breaks = seq(0, 1500000, 100000), limits = c(0, 1500000)) +
-  scale_x_continuous(labels = comma,breaks = seq(0, 300000, 50000), limits = c(0, 300000)) +
+  scale_y_continuous(labels = comma, breaks = seq(0, 1300000, 100000), limits = c(0, 1300000)) +
+  scale_x_continuous(labels = comma,breaks = seq(0, 225000, 25000), limits = c(0, 225000)) +
   geom_line(aes(x=escapement, y=escapement, group=51),linetype="solid", size=1) +
   geom_point(data=dataset1, aes(x=x.t, y=y.t, group=52),pch=16, size=1) +
   geom_point(data=dataset1, aes(x=escapement1, y=recruitment, group=52),pch=16, size=1) +
   geom_vline(xintercept = 20000,linetype = "solid", color = "red", size=1)+
   geom_vline(xintercept = 75000,linetype = "solid", color = "red", size=1)+
+  geom_vline(xintercept = 60000,linetype = "dotted", color = "black", size=1)+
   geom_text(size=3, data=dataset1, aes(x=escapement1, y=recruitment, group=52, label=year,family="Times", 
                                        hjust = -0.1, vjust= -0.4)) +
-  theme_classic(base_size = 16)
+  theme_report(base_size = 14)
+#gg <- gg.gap(plot=p,segments=c(800000,1200000),tick_width=(100000), ylim=c(0,1300000))
 ggsave("output/rjags_Full_BaseCase/processed/horsetail2.png", dpi = 500, height = 6, width = 8, units = "in")
 

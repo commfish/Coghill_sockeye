@@ -121,16 +121,16 @@ Y %>%
                            ifelse(grepl("of_0.8",variable),0.8, 0.9)))-> my2
   
   
-Y %>% 
-    dplyr::select(escapement, or_0.9, or_0.8, or_0.7) %>% 
-    gather(key="variable", value="value", -escapement) %>% 
-    mutate(sra = "Recruitment Profile",
-           max_pct =ifelse(grepl("or_0.7",variable), 
-                           0.7,
-                           ifelse(grepl("or_0.8",variable),0.8, 0.9 )))-> my3
+#Y %>% 
+#    dplyr::select(escapement, or_0.9, or_0.8, or_0.7) %>% 
+#    gather(key="variable", value="value", -escapement) %>% 
+#    mutate(sra = "Recruitment Profile",
+#           max_pct =ifelse(grepl("or_0.7",variable), 
+#                           0.7,
+#                           ifelse(grepl("or_0.8",variable),0.8, 0.9 )))-> my3
   
-my4<-rbind(my1, my2, my3)
-  
+my4<-rbind(my1, my2)
+ 
 my4 %>%
     dplyr::select(escapement, variable, value, sra, max_pct) %>%
     mutate(escapement = as.numeric(escapement),
@@ -143,9 +143,14 @@ my4 %>%
     scale_x_continuous(labels = comma, breaks = seq(0, 200000, 25000), limits = c(0, 200000))+
     scale_linetype_discrete(name = "Percent of Max.")+
     facet_grid(sra ~ .) +geom_vline(xintercept=SMSY, lwd=1.25)+
-    theme(legend.position="bottom") + theme(legend.title=element_blank())
+    theme(legend.position="bottom", legend.key=element_blank(),strip.text.x = element_text(size = 14),strip.text.y  = element_text(size = 14),
+                                                  legend.title=element_blank(),
+                                                  axis.line = element_line(colour = "black"),
+                                                  legend.text=element_text(size=14), 
+                                                  axis.title.y = element_text(size=14, colour="black",family="Times New Roman"),
+                                                  axis.title.x = element_text(size=14, colour="black",family="Times New Roman"))
   options(scipen=99999)
-  ggsave("output/rjags_Full_BaseCase/processed/0.8_0.9_0.7.png", dpi=500, dev='png', width=7, height=6, units='in')
+  ggsave("output/rjags_Full_BaseCase/processed/0.8_0.9_0.7.png", dpi=500, dev='png', width=6, height=5, units='in')
   
   ggplot(qm, aes(escapement, Median))+geom_line(size=1)+
     geom_ribbon(aes(ymin = q5, ymax = q95), alpha=.15)+
