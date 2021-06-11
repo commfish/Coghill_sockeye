@@ -1,5 +1,5 @@
 # Coghill Sockeye Salmon Escapement Goal Analysis
-Please direct any questions to: Sara Miller (sara.miller@alaska.gov).
+Please direct any questions to: Sara Miller (sara.miller@alaska.gov) or Richard Brenner (richard.brenner@alaska.gov).
 
 Last updated: December 2020
 
@@ -7,4 +7,5 @@ The current Coghill Lake sockeye salmon SEG of 20-60,000 was adopted in 2012 aft
 For this escapement goal review, we updated escapement and return data through 2019 (brood years 1962–2014 used) and reanalyzed the Ricker spawner-recruitment relationship in a Bayesian framework (Fleischman and Reimer 2017, Fleischman et al. 2013, and Staton et al. 2016). 
 
 References:
+Joy, P. J., S. B. Haught, R. E. Brenner, S. Miller, J. W. Erickson, J. W. Savereide, and T. R. McKinley. 2021. Escapement goal review of Copper and Bering Rivers and Prince William Sound Pacific salmon stocks, 2020. Alaska Department of Fish and Game, Fishery Manuscript No. 21-02, Anchorage.
 
